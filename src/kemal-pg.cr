@@ -2,8 +2,16 @@ require "pg"
 require "pool/connection"
 require "http"
 
-macro pg_connect(conn_url)
-  Kemal.config.add_handler Kemal::PG.new conn_url
+macro conn
+  env.request.pg.not_nil!.connection
+end
+
+macro pg
+  env.request.pg.not_nil!
+end
+
+def pg_connect(conn_url)
+  Kemal.config.add_handler Kemal::PG.new(conn_url)
 end
 
 class HTTP::Request
@@ -14,7 +22,7 @@ class Kemal::PG < HTTP::Handler
 
   def initialize(conn_url)
     @pg = ConnectionPool.new(capacity: 25, timeout: 0.01) do
-      PG.connect(conn_url)
+      ::PG.connect(conn_url)
     end
   end
 

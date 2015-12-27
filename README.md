@@ -16,21 +16,26 @@ dependencies:
 
 ## Usage
 
+This middleware adds `Postgresql` connection pool to [Kemal](https://github.com/sdogruyol/kemal) as a middleware.
 
 ```crystal
+require "kemal"
 require "kemal-pg"
+
+pg_connect "postgres://user@host:5432/your_db"
+
+# Make sure to yield `env`.
+get "/" do |env|
+  users = conn.exec("SELECT * FROM users")
+  # Be sure to release the connection after you're done
+  pg.release
+  "Hello from postgresql"
+end
 ```
-
-
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/kemal-pg/fork )
+1. Fork it ( https://github.com/sdogruyol/kemal-pg/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -38,4 +43,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) Sdogruyol - creator, maintainer
+- [sdogruyol](https://github.com/sdogruyol) Sdogruyol - creator, maintainer

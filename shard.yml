@@ -1,0 +1,15 @@
+name: kemal-pg
+version: 0.1.0
+
+dependencies:
+  pg:
+    github: will/crystal-pg
+    branch: master
+  pool:
+    github: ysbaddaden/pool
+    branch: master
+
+authors:
+  - Sdogruyol <dogruyolserdar@gmail.com>
+
+license: MIT

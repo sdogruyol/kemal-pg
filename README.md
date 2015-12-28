@@ -27,6 +27,8 @@ pg_connect "postgres://user@host:5432/your_db"
 # Make sure to yield `env`.
 get "/" do |env|
   users = conn.exec("SELECT * FROM users")
+  # Release the connection after you are done with exec
+  release
   "Hello from postgresql"
 end
 ```

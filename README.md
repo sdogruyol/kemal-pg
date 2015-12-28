@@ -31,6 +31,14 @@ get "/" do |env|
 end
 ```
 
+You can configure the connection pool capacity and timeout like:
+
+```ruby
+pg_connect "postgres://user@host:5432/your_db", capacity: 10, timeout: 0.1
+```
+
+The default value for connection pool capacity is `25` and timeout is `0.1`.
+
 ## Contributing
 
 1. Fork it ( https://github.com/sdogruyol/kemal-pg/fork )

@@ -1,6 +1,6 @@
 # kemal-pg
 
-Postgresql connection middleware for [Kemal](https://github.com/sdogruyol/kemal)
+Easily add Postgresql database to your  [Kemal](https://github.com/sdogruyol/kemal) application.
 
 ## Installation
 

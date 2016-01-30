@@ -3,19 +3,19 @@ require "pool/connection"
 require "http"
 
 macro conn
-  env.request.pg.not_nil!.connection
+  env.pg.connection
 end
 
 macro release
-  env.request.pg.not_nil!.release
+  env.pg.release
 end
 
 def pg_connect(conn_url, capacity = 25, timeout = 0.1)
   Kemal.config.add_handler Kemal::PG.new(conn_url, capacity, timeout)
 end
 
-class HTTP::Request
-  property pg
+class HTTP::Server::Context
+  property! pg
 end
 
 class Kemal::PG < HTTP::Handler
@@ -25,8 +25,8 @@ class Kemal::PG < HTTP::Handler
     end
   end
 
-  def call(request)
-    request.pg = @pg
-    call_next(request)
+  def call(context)
+    context.pg = @pg
+    call_next(context)
   end
 end

@@ -2,7 +2,7 @@ require "pg"
 require "pool/connection"
 require "http"
 
-macro conn
+macro connection
   env.pg.connection
 end
 
@@ -15,12 +15,12 @@ def pg_connect(conn_url, capacity = 25, timeout = 0.1)
 end
 
 class HTTP::Server::Context
-  property! pg
+  property! pg : ConnectionPool(PG::Connection)
 end
 
 class Kemal::PG < HTTP::Handler
   def initialize(conn_url, capacity, timeout)
-    @pg = ConnectionPool.new(capacity: capacity, timeout: timeout) do
+    @pg = ConnectionPool(PG::Connection).new(capacity: capacity, timeout: timeout) do
       ::PG.connect(conn_url)
     end
   end
